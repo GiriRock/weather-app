@@ -46,7 +46,7 @@ export default function SearchForm({ action, title }) {
   return (
     <div className="bg-white shadow p-10 rounded">
       { loadError && (
-        <div>Google Map script can't be loaded, please reload the page</div>
+        <div>Google Map script cannot be loaded, please reload the page</div>
       ) }
 
       { isLoaded && (
