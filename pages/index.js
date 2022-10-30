@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import SearchForm from '../components/SearchForm'
 import Layout from '../components/Layout'
+import SearchForm from '../components/SearchForm'
 
 export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>Search Place</title>
+        <title>Weather App</title>
       </Head>
 
       <div className="container mx-auto px-10">
