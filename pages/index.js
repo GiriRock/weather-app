@@ -7,6 +7,7 @@ export default function Home() {
     <Layout>
       <Head>
         <title>Weather App</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container mx-auto px-10">
