@@ -18,14 +18,6 @@ export default function PlaceItem({ place, noButton }) {
           {place.formatted_address}
         </div>
 
-        <div className="mb-4">
-          { place.types.map((type, i) => (
-            <div className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2" key={i}>
-              {type}
-            </div>
-          )) }
-        </div>
-
         {!noButton && (
           <div>
             <Link href={`/place/${place.place_id}`}>

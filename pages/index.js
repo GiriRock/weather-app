@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import SearchForm from '../components/searchForm'
-import Layout from '../components/layout'
+import SearchForm from '../components/SearchForm'
+import Layout from '../components/Layout'
 
-export default function TestPage() {
+export default function Home() {
   return (
     <Layout>
       <Head>

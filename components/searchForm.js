@@ -10,11 +10,12 @@ const scriptOptions = {
   libraries: ['places'],
 }
 
-export default function SearchForm({ action }) {
+export default function SearchForm({ action, title }) {
   const router = useRouter();
   const { isLoaded, loadError } = useLoadScript(scriptOptions)
   const [autocomplete, setAutocomplete] = useState(null)
-  const inputEl = useRef(null)
+  const inputEl = useRef(title ? title : null)
+  console.log(inputEl)
 
   // Handle the keypress for input
   const onKeypress = (e) => {
@@ -61,9 +62,9 @@ export default function SearchForm({ action }) {
                 <input
                   ref={inputEl}
                   type="text"
-                  className="form-input block py-3 w-full rounded-md"
-                  placeholder="Type keywords..."
-                  onKeyPress={onKeypress}
+                  className="form-input block py-3 w-full rounded-md px-3 focus:outline-green-500"
+                  placeholder="Enter Location"
+                  onKeypress={onKeypress}
                 />
               </Autocomplete>
             </div>
