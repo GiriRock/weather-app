@@ -12,10 +12,6 @@ const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
 });
 
 export default function PlaceDetails({ data }) {
-  const latlong={
-    lat : data.location.lat,
-    long: data.location.lng
-  }
   return (
     <Layout>
       <Head>
@@ -23,7 +19,7 @@ export default function PlaceDetails({ data }) {
       </Head>
 
       <div className="container mx-auto px-10 vo">
-        <div className="mt-20 w-full lg:w-6/12 mx-auto">
+        <div className="mt-5 w-full lg:w-6/12 mx-auto">
           <SearchForm action="/search" title={data.placeName} />
         </div>
       </div>
@@ -33,17 +29,19 @@ export default function PlaceDetails({ data }) {
 
           {data.status === 'OK' && (
             <React.Fragment>
-              <PlaceItem place={data.result} noButton />
-              {/* Weather Response */}
-              <div className='flex mx-auto items-center justify-evenly mt-3'>
-                <div className="flex border border-gray-200 p-5 sm:p-10 ">
-                  <CityInfo date={data.date} data={data.weather} />
-                </div>
-                <div className="flex border border-gray-200 p-5 sm:p-10 ">
+              <div>
+                <PlaceItem place={data.result} photoUrl={data.photoUrl} />
+                {/* Weather Response */}
+                <div className='flex flex-col sm:flex-row mx-auto items-center justify-evenly mt-3 flex-wrap w-full gap-4 sm:gap-3'>
+                  <div className="flex border border-gray-200 p-10 bg-white/60 rounded-lg">
+                    <CityInfo date={data.date} data={data.weather} />
+                  </div>
+                  {/* <div className="flex border border-gray-200 p-5 sm:p-10 ">
                   <TemperatureInfo data={data.weather} />
-                </div>
-                <div className='h-72 w-72'>
-                  <MapWithNoSSR props={latlong} />
+                </div> */}
+                  <div className='h-72 w-72 rounded-lg'>
+                    <MapWithNoSSR lat={data.location.lat} long={data.location.lng} />
+                  </div>
                 </div>
               </div>
             </React.Fragment>
@@ -74,6 +72,9 @@ export async function getServerSideProps(context) {
   const forcastRes = await fetch(forecastUrl)
   const dataHourly = await forcastRes.json()
 
+  //Prepare Image
+  const photo = resJson.result.photos ?  resJson.result.photos[0] : null
+  const thumbnailUrl = photo ? `https://maps.googleapis.com/maps/api/place/photo?key=${process.env.API_KEY}&maxwidth=400&photoreference=${photo.photo_reference}` : null
 
   // Prepare Date
   const days = [
@@ -139,7 +140,8 @@ export async function getServerSideProps(context) {
         weather: neededData,
         placeName: resJson.result.name,
         date: exactDate,
-        location: location
+        location: location,
+        photoUrl: thumbnailUrl
       }
     }
   }

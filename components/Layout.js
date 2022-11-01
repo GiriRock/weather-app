@@ -7,7 +7,7 @@ export default function Layout({ children }) {
       <Head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Head>
-      <main>
+      <main className='bg-blue-200 h-screen overflow-hidden'>
         {children}
       </main>
     </div>
