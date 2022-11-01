@@ -5,8 +5,17 @@ import PlaceItem from '../../components/PlaceItem'
 import SearchForm from '../../components/SearchForm'
 import CityInfo from '../../components/CityInfo'
 import TemperatureInfo from '../../components/TemperatureInfo'
+import dynamic from "next/dynamic"
+
+const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
+  ssr: false,
+});
 
 export default function PlaceDetails({ data }) {
+  const latlong={
+    lat : data.location.lat,
+    long: data.location.lng
+  }
   return (
     <Layout>
       <Head>
@@ -24,7 +33,6 @@ export default function PlaceDetails({ data }) {
 
           {data.status === 'OK' && (
             <React.Fragment>
-
               <PlaceItem place={data.result} noButton />
               {/* Weather Response */}
               <div className='flex mx-auto items-center justify-evenly mt-3'>
@@ -33,6 +41,9 @@ export default function PlaceDetails({ data }) {
                 </div>
                 <div className="flex border border-gray-200 p-5 sm:p-10 ">
                   <TemperatureInfo data={data.weather} />
+                </div>
+                <div className='h-72 w-72'>
+                  <MapWithNoSSR props={latlong} />
                 </div>
               </div>
             </React.Fragment>
@@ -127,7 +138,8 @@ export async function getServerSideProps(context) {
         result: resJson.result,
         weather: neededData,
         placeName: resJson.result.name,
-        date: exactDate
+        date: exactDate,
+        location: location
       }
     }
   }
